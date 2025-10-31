@@ -274,7 +274,7 @@ def main():
             print("\nResumen:")
             print(f"\tCoste total mínimo: {valor_objetivo:.2f} €")
             print(f"\tVariables: {variables}")
-            print(f"\tRestricciones: {restricciones}")
+            print(f"\tRestricciones: {restricciones - 1}")
     else:
         print("No se pudo obtener una solución óptima.")
 
