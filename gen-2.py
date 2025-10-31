@@ -20,7 +20,7 @@ def leer_archivo_entrada(ruta_entrada):
         # Leemos la primera línea para obtener n, m y u
         n, m, u = map(int, lineas[0].split())
 
-        if len(lineas) != 1 + m + n:
+        if len(lineas) != 1 + m + n:    # número de líneas que debe deben tener los datos de entrada
             raise ValueError("El archivo de entrada no tiene el formato correcto")
 
         # Con el valor de m, leemos las siguientes m líneas que se corresponden con la matriz de pasajeros
@@ -47,7 +47,7 @@ def leer_archivo_entrada(ruta_entrada):
 
 def verificar_factibilidad(n, m, u, o):
     """Verifica si el problema es factible"""
-    total_franjas_disponibles = sum(o[i][j] for i in range(n) for j in range(u))
+    total_franjas_disponibles = sum(o[i][j] for i in range(n) for j in range(u))    # numero de espacios disponibles
     
     print(f"Franjas disponibles: {total_franjas_disponibles}")
     print(f"Autobuses a asignar: {m}")
@@ -104,9 +104,9 @@ def generar_archivo_datos(n, m, u, c, o, ruta_salida):
             f.write(" :=\n")
             
             # Las filas son FRANJAS (s1, s2, ...)
-            for i in range(n):                      # i es franja [0, n-1]
-                f.write(f"\ts{i+1}")                # Cabecera de fila
-                for j in range(u):                  # j es taller [0, u-1]
+            for i in range(n):
+                f.write(f"\ts{i+1}")
+                for j in range(u):
                     f.write(f" {o[i][j]}")
                 if i < n - 1:
                     f.write("\n")
@@ -125,7 +125,7 @@ def resolver_glpk(modelo, datos, salida_glpk="solucion-2.txt"):
     """Ejecuta GLPK para resolver el problema"""
     try:
         # Comando para ejecutar GLPK
-        comando = ["glpsol", "--math", modelo, "--data", datos, "-o", salida_glpk, "--log", "glpk.log"]     # Agregado --log para guardar el log de GLPK
+        comando = ["glpsol", "--math", modelo, "--data", datos, "-o", salida_glpk]
 
         print("Ejecutando GLPK...")
         resultado = subprocess.run(comando, capture_output=True, text=True)
@@ -145,7 +145,7 @@ def resolver_glpk(modelo, datos, salida_glpk="solucion-2.txt"):
         return None
 
 def procesar_solucion(solucion_glpk, n, m, u):
-    """Procesa la solución de GLPK y la muestra en el formato requerido para 2.2.2"""
+    """Procesa la solución de GLPK y la muestra en el formato pedido"""
     try:
         lineas = solucion_glpk.split('\n')
         valor_objetivo = None
@@ -177,7 +177,7 @@ def procesar_solucion(solucion_glpk, n, m, u):
                     autobus, taller, franja = contenido.split(',')
                     asignaciones.append((autobus, taller, franja))
 
-        # Mostrar resultados en el formato requerido
+        # Mostrar resultados en el formato pedido
         print(f"{valor_objetivo} {variables} {restricciones}")
         for autobus, taller, franja in sorted(asignaciones):
             print(f"Autobús {autobus} asignado a taller {taller} en franja {franja}")
