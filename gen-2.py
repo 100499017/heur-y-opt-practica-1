@@ -58,6 +58,36 @@ def verificar_factibilidad(n, m, u, o):
         return False
     return True
 
+def es_simetrica(matriz):
+    n_filas = len(matriz)
+
+    if n_filas == 0:
+        return True
+    
+    # debe ser cuadrada (filas = columnas)
+    n_columnas = len(matriz[0])
+
+    if n_filas != n_columnas:
+        return False
+        
+    for i in range(n_filas):
+        for j in range(i + 1, n_columnas):
+            
+            if matriz[i][j] != matriz[j][i]:
+                return False
+                
+    return True
+
+def diagonal_es_cero(matriz):
+    n = len(matriz)
+    
+    # Iteraramos sobre la diagonal principal (A[i][i])
+    for i in range(n):
+        if matriz[i][i] != 0:
+            return False
+            
+    return True
+
 def generar_archivo_datos(n, m, u, c, o, ruta_salida):
     """Genera el archivo .dat"""
     try:
@@ -213,6 +243,15 @@ def main():
 
     # Verificar factibilidad
     if not verificar_factibilidad(n, m, u, o):
+        sys.exit(1)
+
+    # Verificar que la matriz sea simétrica
+    if not es_simetrica(c):
+        print("La matriz de autobuses tiene que ser simétrica.")
+        sys.exit(1)
+
+    if not diagonal_es_cero:
+        print("La diagopan principal debe ser todo ceros.")
         sys.exit(1)
 
     print("El problema es FACTIBLE. Procediendo a generar el archivo de datos y resolverlo...")
