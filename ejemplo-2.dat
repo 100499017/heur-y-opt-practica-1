@@ -1,0 +1,17 @@
+set TALLERES := t1 t2 t3;
+set AUTOBUSES := a1 a2 a3 a4 a5 a6;
+set FRANJAS := s1 s2;
+
+param c : a1 a2 a3 a4 a5 a6 :=
+	a1 0 1 2 99 99 99
+	a2 1 0 3 99 99 99
+	a3 2 3 0 99 99 99
+	a4 99 99 99 0 4 5
+	a5 99 99 99 4 0 6
+	a6 99 99 99 5 6 0;
+
+param o : t1 t2 t3 :=
+	s1 1 1 1
+	s2 1 1 1;
+
+end;
